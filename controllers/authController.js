@@ -101,4 +101,12 @@ export const loginController=async (req, res)=>{
         }) 
     }
 };
+
+//test controller
+export const testController=(req,res)=>{
+    res.send('protected route')
+    console.log('protected Route');
+}
+
+
 //jsonWEBtoken  (Stateless Authentication  : No Need to Remember Users: When a user logs in, the server doesn't need to remember who they are. Instead, it gives the user a special token (a JWT) that they can use to prove who they are each time they do something.)
