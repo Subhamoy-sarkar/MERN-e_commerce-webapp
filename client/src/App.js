@@ -8,12 +8,17 @@ import Register from "./pages/Auth/Register";
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Login from "./pages/Auth/Login";
+import Dashboard from "./pages/user/Dashboard";
+import PrivateRoute from "./components/Routes/Private";
 
 function App() {
   return (
     <>
       <Routes>
         <Route path="/" element={<HomePage />} />
+        <Route path="/dashboard" element={<PrivateRoute/>}>
+          <Route path="" element={<Dashboard />} />
+        </Route>
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
         <Route path="/about" element={<About />} />
@@ -97,7 +102,7 @@ React-Axios
 */
 
 /*
-npm concurrently
+npm concurrently  --- ( npm run dev in this case ) 
     npm concurrently is a Node.js package that allows you to run multiple npm scripts or commands simultaneously from a single command line. This is particularly useful in development environments where you might want to run several processes at once, such as a frontend React development server, a backend Node.js server, and maybe a build watcher for assets.
 
     Key Uses:
