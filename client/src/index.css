@@ -110,3 +110,13 @@
   height: 70vh;
   flex-direction: column;
  }
+
+
+
+
+
+ /* ==========Admin->products========= */
+ .product-link{
+  text-decoration: none !important;
+  color: black !important;
+ }
