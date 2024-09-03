@@ -22,7 +22,7 @@ export const createProductController = async (req, res) => {
       case photo && photo.size > 1000000:            //approx 1MB
         return res
           .status(500)
-          .send({ error: "photo is Required and should be less then 1mb" });
+          .send({ error: "photo is Required and should be less then 1MB" });
     }
 
     const products = new productModel({ ...req.fields, slug: slugify(name) });
@@ -53,7 +53,7 @@ export const getProductController = async (req, res) => {
       .find({})
       .populate("category")                      //jo bhi data rahega pura show hoga
       .select("-photo")                         //initially not want photo so that req size doesn't be too big 
-      .limit(12)
+      .limit(50)                               //will limit the total no. of products to be send as response instead of all in the database
       .sort({ createdAt: -1 });
     res.status(200).send({
       success: true,
