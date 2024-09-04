@@ -1,4 +1,5 @@
 import productModel from "../models/productModel.js";
+import categoryModel from "../models/categoryModel.js";
 import fs from "fs"; //comes with node by default
 import slugify from "slugify";
 
@@ -51,7 +52,7 @@ export const getProductController = async (req, res) => {
   try {
     const products = await productModel
       .find({})
-      .populate("category") //jo bhi data rahega pura show hoga
+      .populate("category") //jo bhi data rahega pura show hoga / The populate method in Mongoose is used to retrieve the actual data of referenced documents within a document.  Even though you're already using find() to retrieve products based on a specific category, the category field in your Product documents will still be an ObjectId. To get the actual name or other details of the category, you need to populate the category field.
       .select("-photo") //initially not want photo so that req size doesn't be too big
       .limit(50) //will limit the total no. of products to be send as response instead of all in the database
       .sort({ createdAt: -1 });
@@ -289,6 +290,26 @@ export const relatedProductController = async (req, res) => {
       success: false,
       message: "error while geting related product",
       error,
+    });
+  }
+};
+
+// Get product by category
+export const productCategoryController = async (req, res) => {
+  try {
+    const category = await categoryModel.findOne({ slug: req.params.slug });
+    const products = await productModel.find({ category }).populate("category");
+    res.status(200).send({
+      success: true,
+      category,
+      products,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(400).send({
+      success: false,
+      error,
+      message: "Error While Getting products",
     });
   }
 };
