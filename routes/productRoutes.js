@@ -4,6 +4,9 @@ import {
   deleteProductController,
   getProductController,
   getSingleProductController,
+  productCountController,
+  productFiltersController,
+  productListController,
   productPhotoController,
   updateProductController,
 } from "../controllers/productController.js";
@@ -42,7 +45,16 @@ router.get("/product-photo/:pid", productPhotoController);
 router.delete("/delete-product/:pid",requireSignIn,
     isAdmin, deleteProductController);          
 
-export default router;
 
+//filter product
+router.post('/product-filters',productFiltersController);
+
+//product count
+router.get('/product-count',productCountController);
+
+//product per page
+router.get('/product-list/:page',productListController);
+
+export default router;
 
 //express-formidable is a middleware for handling form data, especially file uploads, in Express.js applications. It simplifies the process of processing and storing files, including images, that are uploaded via HTML forms.
