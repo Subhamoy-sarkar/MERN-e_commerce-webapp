@@ -243,3 +243,52 @@ export const productListController = async (req, res) => {
     });
   }
 };
+
+
+// Search product 
+export const searchProductController =async(req,res)=>{
+  try {
+    const {keyword}=req.params;
+    const results=await productModel.find({
+      $or:[                                                    //the search will match products that satisfy at least one of the specified criteria.
+        {name:{$regex:keyword , $options:"i"}},   
+        {description:{$regex:keyword,$options:"i"}}            //The $regex operator specifies that the keyword should be treated as a regular expression.   // The $options: "i" option makes the search case-insensitive, allowing matches regardless of the capitalization of the keyword and the name field.
+      ]
+    }).select("-photo");
+    res.json(results);
+  } catch (error) {
+    console.log(error);
+    res.status(400).send({
+      success:false,
+      message:'Error in Search Product API',
+      error
+    })
+  }
+}
+
+
+// similar products
+export const relatedProductController = async (req, res) => {
+  try {
+    const { pid, cid } = req.params;
+    const products = await productModel
+      .find({
+        category: cid,                 
+        _id: { $ne: pid },        // the id matches with pid should be discarded
+      })
+      .select("-photo")
+      .limit(3)
+      .populate("category");
+    res.status(200).send({
+      success: true,
+      products,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(400).send({
+      success: false,
+      message: "error while geting related product",
+      error,
+    });
+  }
+};
