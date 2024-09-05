@@ -2,6 +2,8 @@ import { hashPassword } from "../helpers/authHelper.js";
 import userModel from "../models/userModel.js";
 import JWT from 'jsonwebtoken';
 import { comparePassword } from "../helpers/authHelper.js";
+
+
 export const registerController= async ( req , res)=>{
     try {
         const {name,email,password , phone ,address,answer}=req.body
@@ -192,5 +194,9 @@ export const updateProfileController = async (req, res) => {
       });
     }
   };
+
+
+
+
 
 //jsonWEBtoken  (Stateless Authentication  : No Need to Remember Users: When a user logs in, the server doesn't need to remember who they are. Instead, it gives the user a special token (a JWT) that they can use to prove who they are each time they do something.)

@@ -1,5 +1,7 @@
 import express from "express";
 import {
+  brainTreePaymentController,
+  braintreeTokenController,
   createProductController,
   deleteProductController,
   getProductController,
@@ -66,7 +68,12 @@ router.get('/related-product/:pid/:cid',relatedProductController);
 
 //category Wise product
 router.get('/product-category/:slug',productCategoryController);
+//payments routes
+//token
+router.get("/braintree/token", braintreeTokenController);
 
+//payments
+router.post("/braintree/payment", requireSignIn, brainTreePaymentController);
 export default router;
 
 //express-formidable is a middleware for handling form data, especially file uploads, in Express.js applications. It simplifies the process of processing and storing files, including images, that are uploaded via HTML forms.
