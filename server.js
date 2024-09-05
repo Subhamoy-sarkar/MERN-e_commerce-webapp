@@ -7,6 +7,10 @@ import authRoutes from './routes/authRoute.js';
 import cors from 'cors';
 import categoryRoutes from './routes/categoryRoutes.js';
 import productRoutes from './routes/productRoutes.js';
+import path from 'path';
+import { fileURLToPath } from "url";
+
+
 //Configure env : 
 dotenv.config()
 // dotenv.config({{path:''}})  --> if dotevn file not in root directory
@@ -15,6 +19,10 @@ dotenv.config()
 // database config
 connectDB();
 
+
+//esModule fix , __dirname not defined fix
+const __filename=fileURLToPath(import.meta.url);
+const __dirname=path.dirname(__filename);
 
 //rest object
 const app=express();
@@ -34,6 +42,12 @@ app.use('/api/v1/product',productRoutes);
 //rest api
 app.get('/',(req,res)=>{
     res.send("<h1>Welcome to MERN E-commerce app</h1>")
+})
+
+//static files
+app.use(express.static(path.join(__dirname,'./client/build')));
+app.use('*',function(req,res){
+    res.sendFile(path.join(__dirname,'./client/build/index.html'));
 })
 
 //PORT
